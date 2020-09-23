@@ -3,6 +3,35 @@ React Native从入门到实战打造高质量上线App
 
 
 
+# 2、基础理论知识
+
+## ES6和ES7基础
+
+ES6新特性：
+1、类
+2、模块化（import和export）
+3、箭头函数
+4、函数参数默认值
+5、模板字符串
+6、解构赋值
+7、延展操作符
+8、对象属性简写
+9、Promise
+10、let与const
+
+在ES7之前：indexOf()函数来验证数组中是否存在某个元素，这时需要根据返回值是否为-1来判断。
+使用ES7的includes()更直观。
+
+在ES7里面引入了指数运算符**，**具有与Math.pow(..)等效的计算结果。
+
+ES8的特性：
+1、async/await
+2、Object.value()
+3、Object.entries()
+4、String padding
+5、函数参数列表结尾允许逗号
+6、Object.getOwnPropertyDescriptors()获取对象自由属性描述。
+
 
 
 
@@ -187,4 +216,39 @@ export default class App extends Component{
 
 1、 订阅state
 
- 
+   
+
+
+
+
+
+
+
+
+
+
+
+
+## 6.最热模块开发
+FlatList是基于VirtualizedList，
+
+VirtualizedList有以下特性：
+
+- 支持滚动加载(具体可以借助onEndReached的回调，做数据动态加载)；
+- 支持下拉刷新(借助onRefresh / refreshing属性实现)；
+- 支持可配置的可见性（VPV）回调（借助onViewableItemsChanged / viewabilityConfig实现）
+- 滑动方向增加对Horizontal(水平)方向的支持；
+- 更加智能的Item以及section separators支持；
+- 支持Multi-column(借助numColumns属性实现)；
+- 添加scrollToEnd, scrollToIndex, 和 scrollToItem方法的支持；
+- 对 Flow更加友好；
+
+1、基于redux+FlatList实现列表页数据加载？
+2、设计最热模块的state树
+3、如何操作异步action与数据流？
+4、如何动态的设置store和获取store？
+5、如何灵活应用connect？
+6、action如何和调用页面进行交互
+7、FlatList的高级应用于加载更多的优化？
+8、其他实战经验
+
