@@ -1,0 +1,1 @@
+export const API_SERVER = 'https://api.public.atrealm.com';

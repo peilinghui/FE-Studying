@@ -1,0 +1,291 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.realmapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--获取读写外置存储权限-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--获取相机权限-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--获取地址相关权限-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 闪光灯权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <!-- 振动器权限 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+
+    <!-- Android O版本调用安装需要使用该权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <!-- 接收PUSH TOKEN的广播以及PUSH消息需要定义该权限 com.realmapp 要替换上您应用的包名 -->
+    <permission
+        android:name="com.realmapp.permission.PROCESS_PUSH_MSG"
+        android:protectionLevel="signatureOrSystem" />
+
+    <!--接收PUSH TOKEN的广播以及PUSH消息需要定义该权限 com.realmapp 要替换上您应用的包名 -->
+    <uses-permission android:name="com.realmapp.permission.PROCESS_PUSH_MSG" />
+
+    <permission
+        android:name="com.realmapp.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.realmapp.permission.MIPUSH_RECEIVE" />
+
+    <!-- 兼容flyme5.0以下版本，魅族内部集成pushSDK必填，不然无法收到消息-->
+    <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE"></uses-permission>
+    <permission android:name="com.realmapp.push.permission.MESSAGE" android:protectionLevel="signature"/>
+    <uses-permission android:name="com.realmapp.push.permission.MESSAGE"></uses-permission>
+
+    <!--  兼容flyme3.0配置权限-->
+    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
+    <permission android:name="com.realmapp.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"></permission>
+    <uses-permission android:name="com.realmapp.permission.C2D_MESSAGE"/>
+
+    <application
+        android:usesCleartextTraffic="true"
+        android:name=".MainApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/AppTheme">
+        <!-- 接入HMSSDK 需要注册的appid参数。value的值中“${APPID}”用实际申请的appid替换，来源于开发者联盟网站应用的权益详情。
+    格式 android:value="appid=xxxxxx"
+    Access HMSSDK need to register AppID parameters. Value "${APPID}" is replaced with the actual application APPID, derived from the Developer affiliate website application.
+    Format android:value= "appid=xxxxxx"-->
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="appid=100658657" />
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="ratio_float" />
+
+        <activity
+            android:name="com.huawei.hms.activity.BridgeActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>
+
+        <activity
+            android:name="com.huawei.android.hms.agent.common.HMSAgentActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent" >
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>
+
+        <!--<activity-->
+            <!--android:name="com.huawei.updatesdk.service.otaupdate.AppUpdateActivity"-->
+            <!--android:configChanges="orientation|screenSize"-->
+            <!--android:exported="false"-->
+            <!--android:theme="@style/upsdkDlDialog" >-->
+
+            <!--<meta-data-->
+                <!--android:name="hwc-theme"-->
+                <!--android:value="androidhwext:style/Theme.Emui.Translucent.NoTitleBar" />-->
+        <!--</activity>-->
+
+        <!--<activity-->
+            <!--android:name="com.huawei.updatesdk.support.pm.PackageInstallerActivity"-->
+            <!--android:configChanges="orientation|keyboardHidden|screenSize"-->
+            <!--android:exported="false"-->
+            <!--android:theme="@style/upsdkDlDialog" >-->
+            <!--<meta-data-->
+                <!--android:name="hwc-theme"-->
+                <!--android:value="androidhwext:style/Theme.Emui.Translucent" />-->
+        <!--</activity>-->
+
+        <!-- 接收通道发来的通知栏消息 -->
+        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
+            <intent-filter>
+                <action android:name="com.huawei.intent.action.PUSH" />
+            </intent-filter>
+        </receiver>
+        <!-- LeanCloud 自定义 receiver -->
+        <receiver android:name="com.avos.avoscloud.AVHMSPushMessageReceiver">
+            <intent-filter>
+                <!-- 必须，用于接收TOKEN -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- 必须，用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+                <!-- 可选，查看PUSH通道是否连接，不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+            </intent-filter>
+        </receiver>
+
+         <!--开发者自定义的打开推送消息的目的 activity，如果不指定则默认是打开应用。-->
+        <activity android:name="com.realm">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="lcpushscheme" android:host="cn.leancloud.push" android:path="/notify_detail"/>
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.huawei.updatesdk.service.deamon.download.DownloadService"
+            android:exported="false"/>
+
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true"
+            android:process=":pushservice" />
+
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":pushservice" />
+
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.PingReceiver"
+            android:exported="false"
+            android:process=":pushservice">
+            <intent-filter>
+                <action android:name="com.xiaomi.push.PING_TIMER" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.avos.avoscloud.AVMiPushMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.avos.avoscloud.AVFlymePushMessageReceiver">
+            <intent-filter>
+                <!-- 接收push消息 -->
+                <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
+                <!-- 接收register消息 -->
+                <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
+                <!-- 接收unregister消息-->
+                <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK"/>
+                <!-- 兼容低版本Flyme3推送服务配置 -->
+                <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
+                <action android:name="com.meizu.c2dm.intent.RECEIVE" />
+                <category android:name="com.realmapp"></category>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.avos.avoscloud.AVFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.avos.avoscloud.AVFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+     <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name" />
+        <activity android:name=".PushHandlerActivity"></activity>
+
+        <service
+            android:name="com.avos.avoscloud.PushService"
+            android:exported="true" />
+
+        <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.realmapp.CustomPushReceiver">
+            <intent-filter>
+                <action android:name="com.atrealm.INNER_NOTI" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities"
+            android:exported="false">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            tools:replace="android:resource"
+            android:resource="@xml/provider_paths"/>
+        </provider>
+    </application>
+
+</manifest>
