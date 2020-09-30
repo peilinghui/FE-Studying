@@ -12,7 +12,7 @@ import { StackNavigator } from 'react-navigation';
 import RouteConfigs from './app/RouteConfigs'
 import StackNavigatorConfig from './app/StackNavigatorConfig'
 import SplashScreen from 'react-native-splash-screen'
-import CodePush from "react-native-code-push";
+// import CodePush from "react-native-code-push";
 import './app/storage/store'
 
 
@@ -118,14 +118,14 @@ class App extends PureComponent {
         this.setState({ progress });
     };
 
-    // 后台静默更新
-    _sync = () => {
-        CodePush.sync(
-            {},
-            this._codePushStatusDidChange,
-            this._codePushDownloadDidProgress
-        );
-    };
+    // // 后台静默更新
+    // _sync = () => {
+    //     CodePush.sync(
+    //         {},
+    //         this._codePushStatusDidChange,
+    //         this._codePushDownloadDidProgress
+    //     );
+    // };
 
     // 弹出更新提示窗更新
     _syncImmediate = () => {

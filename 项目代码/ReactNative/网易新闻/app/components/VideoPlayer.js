@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Video from 'react-native-video';
-import Orientation from "react-native-orientation";
+// import Orientation from "react-native-orientation";
 
 const screenWidth = Dimensions.get('window').width;
 const defaultVideoHeight = screenWidth * 9/16;
@@ -285,17 +285,17 @@ export default class VideoPlayer extends React.Component {
     }
   };
 
-  _onTapSwitchButton = () => {
-    this.props.onChangeOrientation && this.props.onChangeOrientation(this.state.isFullScreen);
-  };
+  // _onTapSwitchButton = () => {
+  //   this.props.onChangeOrientation && this.props.onChangeOrientation(this.state.isFullScreen);
+  // };
 
-  _onTapBackButton = () => {
-    if (this.state.isFullScreen) {
-      Orientation.lockToPortrait();
-    } else {
-      this.props.onTapBackButton && this.props.onTapBackButton();
-    }
-  };
+  // _onTapBackButton = () => {
+  //   if (this.state.isFullScreen) {
+  //     Orientation.lockToPortrait();
+  //   } else {
+  //     this.props.onTapBackButton && this.props.onTapBackButton();
+  //   }
+  // };
 
   updateVideo(videoUrl, seekTime, videoTitle) {
     this.setState({

@@ -133,6 +133,7 @@ class GuideScreen extends PureComponent {
 
   render() {
     const {navigation, guideData, themeColor} = this.props;
+    // console.log('=======',JSON.stringify(guideData.filter((item)=>item.name)))
     //列表滚动变化监听配置
     const VIEWABILITY_CONFIG = {
       minimumViewTime: 0,
