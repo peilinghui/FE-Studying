@@ -1,0 +1,40 @@
+2020年11月13号
+
+# 问题1：React 中 setState 什么时候是同步的，什么时候是异步的？
+这里讨论的同步和异步并不是指setState是否异步执行, 而是指调用setState之后this.state能否立即更新.
+setState是同步和异步最关键的因素是react内部的执行上下文executionContext的状态.
+当executionContext为空时, 表现为同步.
+反之executionContext不为空, 表现为异步.
+executionContext何时为空?
+这个问题反过来更好理解, 什么时候executionContext不为空? 因为executionContext是react内部控制的属性, 当初次render, 合成事件触发时都会改变executionContext的值.
+
+只要绕开react内部触发更改executionContext的逻辑, 就能保证executionContext为空, 进而实现setState为同步.
+可以使用异步调用如setTimeout, Promise, MessageChannel等
+可以监听原生事件, 注意不是合成事件(合成事件是react体系, 会更改executionContext), 在原生事件的回调函数中执行 setState 就是同步的
+
+从源码的角度来说，setState 的行为是“异步”还是“同步”取决于 React 执行 setState 方法时的执行上下文①(ExecutionContext)。
+
+如果 ExecutionContext 为 0，表示当前没有正在进行的其他任务，则 setState 是“同步”的。React 源码地址：<https://github.com/facebook/react/blob/b53ea6ca05d2ccb9950b40b33f74dfee0421d872/packages/react-reconciler/src/ReactFiberWorkLoop.js#L411>​
+
+①注意这里的执行上下文不是浏览器的，为了更好的控制渲染任务，避免长时间占用浏览器的主线程， React 实现了自己的执行上下文。
+
+
+
+
+问题2：React 中执行 setState 时怎么保证你取到的上一次state是正确的？
+// 在错误示例中
+this.setState({count : this.state.count + 1}) 
+this.setState({count : this.state.count + 1}) 
+
+// 在正确示例中
+this.setState((prevState, props) => ({
+  count: prevState.count + 1
+}))
+this.setState((prevState, props) => ({
+  count: prevState.count + 1
+}))
+
+查阅资料发现，在多次调用setState（）时，React 并不会同步处理这些setState（）函数，而是做了一个“批处理”——如果使用对象作为参数传递给setState，React 会合并这些对象。
+而同样的情况下，当你给setState（）传入一个函数时，这些函数将被放进一个队列，然后按调用顺序执行。
+
+#
