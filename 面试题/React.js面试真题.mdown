@@ -1,0 +1,34 @@
+#React.js面试真题
+
+
+>最重要的是：解决问题的能力，虽然没遇到过，但是在面试过程中体现出解决问题的能力 
+
+####1、Redux中间件的原理是什么？
+中间件是：位于action和store之间的代码。
+改装dispatcher。
+
+react-thunk:
+源码：
+
+```
+	function createThunkMiddleware(extraArgument) {
+	  return ({ dispatch, getState }) => (next) => (action) => {
+	    if (typeof action === 'function') {
+	      return action(dispatch, getState, extraArgument);
+	    }
+	
+	    return next(action);
+	  };
+	}
+	
+	const thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+	
+	export default thunk;
+```
+
+Action一般来说只能是个对象，用react-thunk，action可以是个函数，中间件帮助你把函数式的action转化为对象再传给store。
+
+
+
+2、Redux中同步action和异步action的区别？
